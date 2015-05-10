@@ -1,0 +1,23 @@
+---
+title: "Performance of US Domestic Flights between 2003-2015"
+author: "Mohammad Key Manesh"
+date: "Friday, May 08, 2015"
+output: html_document
+---
+
+
+```{r}
+airlines = read.csv("airline_delays.csv")
+
+```
+
+
+Summary of data:
+```{r}
+str(airlines)
+summary(airlines)
+
+```
+
+
+![Caption for the picture.](/AllFlightsDelay.JPG)
