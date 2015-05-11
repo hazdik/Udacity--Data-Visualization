@@ -6,8 +6,20 @@ output: html_document
 ---
 
 
-```{r}
-airlines = read.csv("airline_delays.csv")
+```{r include=FALSE}
+airlines = read.csv("airlines.csv")
+airlines = airlines[is.na(airlines$arr_flights) ==0,]
+colnames(airlines)[10]="weather_ct"
+colnames(airlines)[16]="arr_delay"
+colnames(airlines)[17]="carrier_delay"
+colnames(airlines)[2]="month"
+
+```
+
+Structure of Data:
+```{r echo=FALSE}
+str(airlines)
+
 
 ```
 
@@ -19,5 +31,55 @@ summary(airlines)
 
 ```
 
+##Initial run of performance data
+Below chart shows my initial run to display the performance of US domestic flights in terms of their carrier delay. As you see, x shows the years and y shows average carrier delay based on minutes. Each line in the diagram shows the performance of a carrier. 
 
-![Caption for the picture.](/AllFlightsDelay.JPG)
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/AllFlightsDelay.JPG)
+
+This is such a busy figure and obviously it is not efficient in delivering analysis. For the next step, I will pick only 6 airlines based on the arrival flights number. For the rest of this project I will only analyze and visualize data related to top largest air carrier at US.
+
+```{r echo=FALSE}
+top6 = tail(sort(tapply(airlines$arr_flights, airlines$carrier_name, sum)))
+top6.carrier_name = labels(top6)
+top6.carrier_name = top6.carrier_name[[1]]
+top6_airlines = airlines[airlines$carrier_name %in% top6.carrier_name  ,]
+top6_airlines$X = NULL
+top6_airlines$carrier_name = factor(top6_airlines$carrier_name)
+
+
+write.csv(top6_airlines, "Top6Carriers.csv", row.names=FALSE)
+```
+
+## Final Visualizations
+Now, we have all the performance information for following air carriers which are in fact the top largerst US domestic air carriers:
+
+```{r echo=FALSE}
+top6_airlines$carrier_name
+
+```
+
+In this project the objective is to:
+
+**compare percentage of flights for each carrier which arrived to the destination on time**
+**comparing average carrier delay for each carrier**
+**comparing flight cancellation for different carriers**
+
+For this purpose, I will aggregate data by *year* and *carrier name* and then I will add new features that are required to do above analysis.
+
+
+```{r include=FALSE, warning=FALSE}
+aggregated_data = aggregate(top6_airlines[,7:ncol(top6_airlines)], by = list(top6_airlines$year,top6_airlines$carrier_name), FUN=sum, na.rm=TRUE)
+
+colnames(aggregated_data)[1] = "year"
+colnames(aggregated_data)[2] = "carrier_name"
+
+aggregated_data$avg_arr_del15 = 100 * aggregated_data$arr_del15/aggregated_data$arr_flights
+aggregated_data$avg_carrier_ct = 100 * aggregated_data$carrier_ct/aggregated_data$arr_flights
+aggregated_data$avg_arr_cancelled = 100 * aggregated_data$arr_cancelled/aggregated_data$arr_flights
+aggregated_data$avg_arr_delay = aggregated_data$arr_delay/aggregated_data$arr_flights
+aggregated_data$avg_carrier_delay = aggregated_data$carrier_delay/aggregated_data$arr_flights
+
+write.csv(aggregated_data, "summary_airlines.csv", row.names=FALSE)
+```
+
+
