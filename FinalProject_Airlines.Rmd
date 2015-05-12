@@ -1,13 +1,14 @@
-
 ---
 title: "Performance of US Domestic Flights from 2003 to 2015"
-author: "Mohammad Key Manesh"
-date: "Friday, May 12, 2015"
+date: "Tuesday, May 12, 2015"
 output: html_document
 ---
 
 
+
 ```{r include=FALSE}
+require(knitr)
+require(markdown)
 airlines = read.csv(".//data//airlines.csv")
 airlines = airlines[is.na(airlines$arr_flights) ==0,]
 colnames(airlines)[10]="weather_ct"

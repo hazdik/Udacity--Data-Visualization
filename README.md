@@ -1,10 +1,9 @@
-
 ---
 title: "Performance of US Domestic Flights from 2003 to 2015"
-author: "Mohammad Key Manesh"
-date: "Friday, May 12, 2015"
+date: "Tuesday, May 12, 2015"
 output: html_document
 ---
+
 
 
 
