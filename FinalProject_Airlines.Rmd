@@ -2,12 +2,17 @@
 title: "Performance of US Domestic Flights between 2003-2015"
 author: "Mohammad Key Manesh"
 date: "Friday, May 08, 2015"
-output: html_document
+output: 
+  html_document:
+      pandoc_args: [
+        "+RTS", "-K64m",
+        "-RTS"
+      ]
 ---
 
 
 ```{r include=FALSE}
-airlines = read.csv("airlines.csv")
+airlines = read.csv(".//data//airlines.csv")
 airlines = airlines[is.na(airlines$arr_flights) ==0,]
 colnames(airlines)[10]="weather_ct"
 colnames(airlines)[16]="arr_delay"
@@ -25,16 +30,15 @@ str(airlines)
 
 
 Summary of data:
-```{r}
-str(airlines)
+```{r echo=FALSE}
 summary(airlines)
 
 ```
 
-##Initial run of performance data
+##Initial Analysis: EDA
 Below chart shows my initial run to display the performance of US domestic flights in terms of their carrier delay. As you see, x shows the years and y shows average carrier delay based on minutes. Each line in the diagram shows the performance of a carrier. 
 
-![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/AllFlightsDelay.JPG)
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/AllFlightsDelay.JPG)
 
 This is such a busy figure and obviously it is not efficient in delivering analysis. For the next step, I will pick only 6 airlines based on the arrival flights number. For the rest of this project I will only analyze and visualize data related to top largest air carrier at US.
 
@@ -47,24 +51,26 @@ top6_airlines$X = NULL
 top6_airlines$carrier_name = factor(top6_airlines$carrier_name)
 
 
-write.csv(top6_airlines, "Top6Carriers.csv", row.names=FALSE)
+
 ```
 
 ## Final Visualizations
 Now, we have all the performance information for following air carriers which are in fact the top largerst US domestic air carriers:
 
 ```{r echo=FALSE}
-top6_airlines$carrier_name
+levels(top6_airlines$carrier_name)
 
 ```
 
 In this project the objective is to:
 
-**compare percentage of flights for each carrier which arrived to the destination on time**
-**comparing average carrier delay for each carrier**
-**comparing flight cancellation for different carriers**
+* compare percentage of flights for each carrier which arrived to the destination on time
+* comparing average carrier delay for each carrier
+
 
 For this purpose, I will aggregate data by *year* and *carrier name* and then I will add new features that are required to do above analysis.
+
+To display the delay metrics over time, I will use combination of point (scatter plot) and line chart. Using point, I can precisly display the measure and audience can easily compare. Also, I will add lines to be able to show trends of the performance over year. This makes it easy to see how perfomance of each carrier changed over time. 
 
 
 ```{r include=FALSE, warning=FALSE}
@@ -78,8 +84,66 @@ aggregated_data$avg_carrier_ct = 100 * aggregated_data$carrier_ct/aggregated_dat
 aggregated_data$avg_arr_cancelled = 100 * aggregated_data$arr_cancelled/aggregated_data$arr_flights
 aggregated_data$avg_arr_delay = aggregated_data$arr_delay/aggregated_data$arr_flights
 aggregated_data$avg_carrier_delay = aggregated_data$carrier_delay/aggregated_data$arr_flights
+aggregated_data$avg_ontime = 100 - aggregated_data$avg_arr_del15
 
-write.csv(aggregated_data, "summary_airlines.csv", row.names=FALSE)
+write.csv(aggregated_data, ".//data//summary_airlines.csv", row.names=FALSE)
 ```
 
+### Average Delay
+
+Following figure shows how the average delay changed over time for each of the carriers.
+
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_DelayMin.JPG)
+
+As you can see the average delay per flight fluctuated between 5 and 17 mins. Over the last 12 years, ExpressJet, American Airlines and United Airlines have had higher average delay comparing to other three. Also, we can see that ExpressJet have had the highest average delay per flight for the last five years.
+
+### Percentage of Late Flights
+
+Following figure shows percentage of late flights for each of the carrier. A flight is marked as late when it reaches its destination with delay of more than 15 minutes.
+
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_DelayedPer.JPG)
+
+Based on the diagram, the percentage for late flight is in range of 10 to 30%. As we can see in the line chart, Delta Airlines is doing very well comparing to other carriers in this department, especially for the last five years.
+
+### Percentage of On-Time Flights
+
+Follwing figure is very similar to the previous figure. This one displays the on-time flights while the last one was showing the late flights. 
+
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_OnTimePer.JPG)
+
+### Average Delay due to Carrier
+
+Delay in flights can come from different sources, such as carrier, security check, weather and etc. In following two figures we focus on only those delays which are due to carrier.
+
+Following figure displays the average delay due to carrier per flight.  
+
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_CarrierDelay.JPG)
+
+As you can see, ExpressJet have had the highest delay for the last five years, while Southwest Airlines, Delta and Skywest Airlines were among the lowest in this category.
+
+### Percentage of Late Flight due to Carrier
+
+Following figure shows the percentage of flights that are late dure to carrier. 
+
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_DelayedCarrierPerc.JPG)
+
+As you can see Skywest was one of the worst between 2003-2008 but they managed to be one of the best for last 8 years. Also Delta Airlines is among the best for this category.
+
+
+
+## Feedback
+I showed the chart and diagrams to couple of my friends and here some ideas that I got and applied to improve my charts:
+
+1- The legend was on the side and it took some spaces that I could use to enlarge my graph. So I used the empty space in the chart to put the legend
+
+
+2- First I used propertion of on-time or late flights, instead of percentage. So the number for late flights were like .02 or .11 which were not as readable as percentage. I changed it to percentage.
+
+3- The range for percentage of on-time flight is between 70 and 90%. The diagram initially had y axis from (0 to 100%) which made a lot of empty space in the chart and also the difference of perfromance among the carriers were not really visible. I shortened the range from (0,100) to (60,90) so the difference would more obvious to eyes of the readers!
+
+```{r include=FALSE}
+   # add this chunk to end of mycode.rmd
+   file.rename(from="scripts/mycode.md", 
+               to="README.md")
+```
 
