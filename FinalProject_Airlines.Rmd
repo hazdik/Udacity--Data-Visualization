@@ -146,6 +146,11 @@ I showed the chart and diagrams to couple of my friends and here some ideas that
 5- In each chart the line for each carrier was different so it made it a little bit difficult for the reader to follow a story. I fixed the color for each carrier for all of the charts.
 
 ```{r include=FALSE}
+library(knitr)
+library(markdown)
+
+#transform the .Rmd to a markdown (.md) file.
+knit('FinalProject_Airlines.Rmd')
 
    file.rename(from="scripts/FinalProject_Airlines.md", 
                to="README.md")
