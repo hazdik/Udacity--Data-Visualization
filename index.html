@@ -53,32 +53,6 @@
       */
                     
 
-          function drawChart(xx, xTitle, yy, yTitle, series, chartTitle, data) {
-            var margin = 75,
-              width = 800 - margin,
-              height = 400 - margin;
-            var svg = d3.select("body")
-            .append("svg")
-              .attr("width", width + margin)
-              .attr("height", height + margin)
-            .append('g')
-                .attr('class','chart');
-
-            var chart = new dimple.chart(svg, data);
-            var x = chart.addTimeAxis("x", xx); 
-            x.tickFormat = "%Y";
-            x.title = xTitle;
-            
-            addText(svg, chartTitle);
-
-
-            var y = chart.addMeasureAxis("y", yy);
-            y.title = yTitle;
-            chart.addSeries(series, dimple.plot.line);
-            chart.addSeries(series, dimple.plot.scatter);
-            chart.addLegend(width * .75, height * .81, width*0.25, 100, 'right');
-            chart.draw();
-          };
           
           /*
           drawChart("year", "Year",
@@ -99,6 +73,12 @@
           function addSeries( series, chart) {
             chart.addSeries("carrier_name", dimple.plot.line);
             chart.addSeries("carrier_name", dimple.plot.scatter);
+            chart.assignColor("SkyWest Airlines Inc.", "yellow");
+            chart.assignColor("Delta Air Lines Inc.", "red");
+            chart.assignColor("Southwest Airlines Co.", "purple");
+            chart.assignColor("United Air Lines Inc.", "lightblue");
+            chart.assignColor("ExpressJet Airlines Inc.", "green");
+            chart.assignColor("American Airlines Inc.", "darkblue");
             chart.addLegend(width * .75, height * .81, width*0.25, 100, 'right');
 
           };
