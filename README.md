@@ -1,21 +1,17 @@
 
-title: **"Performance of US Domestic Flights from 2003 to 2015"**
+---
+title: "Performance of US Domestic Flights from 2003 to 2015"
 author: "Mohammad Key Manesh"
 date: "Friday, May 12, 2015"
-
-```{ include=FALSE}
-output: 
-  html_document:
-      pandoc_args: [
-        "+RTS", "-K64m",
-        "-RTS"
-      ]
-
-
-```
+output: html_document
+---
 
 
 
+
+In this project, I used dataset from Bureau of Transportation Statistics to analyze performance of different US Domestic Air Carrier in the period of 2003-2015. 
+
+Since June 2003, the airlines that report on-time data also report the causes of delays and cancellations to the Bureau of Transportation Statistics, and we used this dataset to compare delay for top 6 largest air carrier in USA.
 
 Structure of Data:
 
@@ -194,6 +190,21 @@ I showed the chart and diagrams to couple of my friends and here some ideas that
 4- The code was not really readable and scalable. I made it more modular so it will be easier to scale!
 
 5- In each chart the line for each carrier was different so it made it a little bit difficult for the reader to follow a story. I fixed the color for each carrier for all of the charts.
+
+
+##References
+
+* dimple.js Documentation
+* Data Visualization with d3.js course at Udacity 
+* Posts in Stack Overflow
+* http://www.transtats.bts.gov/
+
+## Data Source
+Data is taken from the following website on May 5, 2015:
+http://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp?pn=1
+
+data/airlines.csv contains the original data
+data/summary_airlines.csv contains the cleaned and summarized data which was used for the project.
 
 
 
