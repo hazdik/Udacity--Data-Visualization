@@ -117,7 +117,7 @@ Delay in flights can come from different sources, such as carrier, security chec
 
 Following figure displays the average delay due to carrier per flight.  
 
-![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_CarrierDelay.JPG)
+![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_CarrierDelayMin.JPG)
 
 As you can see, ExpressJet have had the highest delay for the last five years, while Southwest Airlines, Delta and Skywest Airlines were among the lowest in this category.
 
@@ -141,9 +141,13 @@ I showed the chart and diagrams to couple of my friends and here some ideas that
 
 3- The range for percentage of on-time flight is between 70 and 90%. The diagram initially had y axis from (0 to 100%) which made a lot of empty space in the chart and also the difference of perfromance among the carriers were not really visible. I shortened the range from (0,100) to (60,90) so the difference would more obvious to eyes of the readers!
 
+4- The code was not really readable and scalable. I made it more modular so it will be easier to scale!
+
+5- In each chart the line for each carrier was different so it made it a little bit difficult for the reader to follow a story. I fixed the color for each carrier for all of the charts.
+
 ```{r include=FALSE}
-   # add this chunk to end of mycode.rmd
-   file.rename(from="scripts/mycode.md", 
+
+   file.rename(from="scripts/FinalProject_Airlines.md", 
                to="README.md")
 ```
 
