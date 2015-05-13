@@ -1,5 +1,6 @@
 ---
 title: "Performance of US Domestic Flights from 2003 to 2015"
+author: "Mohammad Key Manesh"
 date: "Tuesday, May 12, 2015"
 output: html_document
 ---
@@ -65,11 +66,14 @@ levels(top6_airlines$carrier_name)
 
 In this project the objective is to:
 
-* compare percentage of flights for each carrier which arrived to the destination on time
-* comparing average carrier delay for each carrier
+* Comparing the performance of Delta Air Lines Inc. with Other Carriers
 
+In fact, during last five years **Delta Air Lines Inc.** has outperformed other US domestic carriers as it has less delay. More specifically:
 
-For this purpose, I will aggregate data by *year* and *carrier name* and then I will add new features that are required to do above analysis.
+* Delta Air Lines is now one of the best US carriers in terms of flight delay percentage
+* It had less overal and carrier delay comparing to other airlines
+
+To show the performance of carriers, I will aggregate data by *year* and *carrier name* and then I will add new features that are required to do above analysis.
 
 To display the delay metrics over time, I will use combination of point (scatter plot) and line chart. Using point, I can precisly display the measure and audience can easily compare. Also, I will add lines to be able to show trends of the performance over year. This makes it easy to see how perfomance of each carrier changed over time. 
 
@@ -96,7 +100,7 @@ Following figure shows how the average delay changed over time for each of the c
 
 ![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_DelayMin.JPG)
 
-As you can see the average delay per flight fluctuated between 5 and 17 mins. Over the last 12 years, ExpressJet, American Airlines and United Airlines have had higher average delay comparing to other three. Also, we can see that ExpressJet have had the highest average delay per flight for the last five years.
+As you can see the average delay per flight fluctuated between 5 and 17 mins. Over the last 4 years Delta Air Lines had the lowest delay comparing to other carriers.
 
 ### Percentage of Late Flights
 
@@ -104,7 +108,7 @@ Following figure shows percentage of late flights for each of the carrier. A fli
 
 ![Caption for the picture.](https://raw.githubusercontent.com/keymanesh/Udacity--Data-Visualization/master/img/Top6_DelayedPer.JPG)
 
-Based on the diagram, the percentage for late flight is in range of 10 to 30%. As we can see in the line chart, Delta Airlines is doing very well comparing to other carriers in this department, especially for the last five years.
+Based on the diagram, the percentage for late flight is in range of 10 to 30%. As we can see in the line chart, Delta Airlines is doing very well comparing to other carriers in this department, especially for the last five years the percentage of its late flights is significantly lower than other carriers'.
 
 ### Percentage of On-Time Flights
 
@@ -135,16 +139,38 @@ As you can see Skywest was one of the worst between 2003-2008 but they managed t
 ## Feedback
 I showed the chart and diagrams to couple of my friends and here some ideas that I got and applied to improve my charts:
 
-1- The legend was on the side and it took some spaces that I could use to enlarge my graph. So I used the empty space in the chart to put the legend
+1- "Legends are distracting"
+
+The legend was on the side and it took some spaces that I could use to enlarge my graph. So I used the empty space in the chart to put the legend
 
 
-2- First I used propertion of on-time or late flights, instead of percentage. So the number for late flights were like .02 or .11 which were not as readable as percentage. I changed it to percentage.
+2- "Dependent value is vague and it is difficult to understand the measure or unit of the variable"
 
-3- The range for percentage of on-time flight is between 70 and 90%. The diagram initially had y axis from (0 to 100%) which made a lot of empty space in the chart and also the difference of perfromance among the carriers were not really visible. I shortened the range from (0,100) to (60,90) so the difference would more obvious to eyes of the readers!
+First I used propertion of on-time or late flights, instead of percentage. So the number for late flights were like .02 or .11 which were not as readable as percentage. I changed it to percentage.
 
-4- The code was not really readable and scalable. I made it more modular so it will be easier to scale!
+3- "Based on data for On-Time flight rates chart, there is significant difference between carriers, however, the way you scaled the y axis doesn't really deliever the point! "
 
-5- In each chart the line for each carrier was different so it made it a little bit difficult for the reader to follow a story. I fixed the color for each carrier for all of the charts.
+The range for percentage of on-time flight is between 70 and 90%. The diagram initially had y axis from (0 to 100%) which made a lot of empty space in the chart and also the difference of perfromance among the carriers were not really visible. I shortened the range from (0,100) to (60,90) so the difference would more obvious to eyes of the readers!
+
+4- "The code is not scalable and it seems to be redundant"
+
+The code was not really readable and scalable. I made it more modular so it will be easier to scale!
+
+5- "Colors are not consistent and it makes it difficult to follow performance in different charts"
+
+In each chart the line for each carrier was different so it made it a little bit difficult for the reader to follow a story. I fixed the color for each carrier for all of the charts.
+
+6- "Since the code is large it is better to separate html, js and css from each other"
+
+I separated javascript and css from html so the source code would follow best practices!
+
+7- "Code is not readable, it is difficult to understand what each function do"
+
+I added comments for different sections of my code so it will be more readable
+
+8- "There is not a story behind the graphs. It is more Explpraatory than Explanatory"
+
+In the new version, I focused on Delta Air Lines and how it performs comparing to other carriers. I believe Delta Air Lines is currently one of the best US Domestic Air Lines in terms of delay.
 
 
 ##References
